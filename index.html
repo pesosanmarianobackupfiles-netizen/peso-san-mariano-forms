@@ -37,16 +37,17 @@
 
     .container {
         max-width: 700px;
-        margin: 40px auto;
+        margin: 30px auto;
         padding: 20px;
     }
 
     .card {
         background: white;
         border-radius: 12px;
-        padding: 35px 25px;
+        padding: 30px 25px;
         text-align: center;
         box-shadow: 0 3px 15px rgba(0,0,0,0.10);
+        margin-bottom: 20px;
     }
 
     .card h2 {
@@ -58,9 +59,15 @@
         line-height: 1.6;
     }
 
+    #qrcode {
+        display: flex;
+        justify-content: center;
+        margin: 20px auto;
+    }
+
     .button {
         display: inline-block;
-        margin-top: 20px;
+        margin-top: 15px;
         padding: 15px 30px;
         background: #0b63b6;
         color: white;
@@ -74,11 +81,31 @@
         background: #084f91;
     }
 
+    .qr-note {
+        font-size: 14px;
+        color: #555;
+    }
+
     footer {
         text-align: center;
         color: #666;
         font-size: 13px;
-        margin-top: 30px;
+        margin-top: 25px;
+    }
+
+    @media (max-width: 600px) {
+        header h1 {
+            font-size: 23px;
+        }
+
+        .container {
+            margin: 15px auto;
+            padding: 12px;
+        }
+
+        .card {
+            padding: 25px 18px;
+        }
     }
 </style>
 </head>
@@ -86,15 +113,34 @@
 <body>
 
 <header>
-    <h1>PESO San Mariano</h1>
-    <p>Online Jobseeker Registration</p>
+    <h1>PESO San Mariano Online Forms</h1>
+    <p>Android-friendly web form — no app installation required</p>
 </header>
 
 <div class="container">
 
+    <!-- QR CODE -->
     <div class="card">
 
-        <h2>NSRP Jobseeker Registration Form</h2>
+        <h2>📱 Scan this QR Code</h2>
+
+        <p>
+            Scan this QR code using your Android phone
+            to open the PESO San Mariano NSRP registration website.
+        </p>
+
+        <div id="qrcode"></div>
+
+        <p class="qr-note">
+            Scan with any Android camera or QR scanner.
+        </p>
+
+    </div>
+
+    <!-- NSRP FORM -->
+    <div class="card">
+
+        <h2>NSRP Jobseeker Registration</h2>
 
         <p>
             National Skills Registration Program (NSRP)
@@ -102,8 +148,7 @@
         </p>
 
         <p>
-            Please click the button below to access the
-            online registration form.
+            Click the button below to access the online registration form.
         </p>
 
         <a class="button" href="./nsrp/">
@@ -117,6 +162,21 @@
     </footer>
 
 </div>
+
+<!-- QR CODE LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+    const websiteURL =
+        "https://pesosanmarianobackupfiles-netizen.github.io/peso-san-mariano-forms/";
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: websiteURL,
+        width: 220,
+        height: 220,
+        correctLevel: QRCode.CorrectLevel.H
+    });
+</script>
 
 </body>
 </html>
