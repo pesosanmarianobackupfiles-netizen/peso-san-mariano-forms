@@ -2,72 +2,121 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<title>PESO San Mariano Online Forms</title>
-<meta name="description" content="PESO San Mariano online forms for Android and mobile browsers.">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PESO San Mariano - NSRP Jobseeker Registration</title>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#f3f5f7;color:#17202a;font-family:Arial,Helvetica,sans-serif}
-header{background:#0a5fb4;color:#fff;text-align:center;padding:22px 14px}
-header h1{margin:0;font-size:24px}
-header p{margin:7px 0 0;font-size:13px}
-.wrap{max-width:900px;margin:auto;padding:16px}
-.qr-card{background:#fff;border-radius:14px;padding:16px;text-align:center;box-shadow:0 2px 10px #0001;margin-bottom:16px}
-#portalQr{display:flex;justify-content:center;margin:10px 0}
-#portalUrl{font-size:11px;color:#666;word-break:break-all}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 2px 10px #0001}
-.card h2{font-size:18px;margin:0 0 8px}
-.card p{font-size:13px;color:#555;min-height:38px}
-.card a{display:block;text-align:center;background:#0a5fb4;color:#fff;text-decoration:none;padding:12px;border-radius:8px;font-weight:700}
-.card.rice a{background:#087f3f}.card.field a{background:#0a9f59}
-.note{margin-top:16px;background:#fff;border-radius:12px;padding:14px;font-size:12px;color:#555}
-@media(max-width:600px){header h1{font-size:21px}.wrap{padding:10px}.card{padding:15px}}
-@media print{.qr-card{display:none}}
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f1f5f9;
+        color: #1f2937;
+    }
+
+    header {
+        background: #0b63b6;
+        color: white;
+        text-align: center;
+        padding: 30px 15px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 28px;
+    }
+
+    header p {
+        margin: 8px 0 0;
+        font-size: 15px;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 35px 25px;
+        text-align: center;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.10);
+    }
+
+    .card h2 {
+        margin-top: 0;
+        color: #0b63b6;
+    }
+
+    .card p {
+        line-height: 1.6;
+    }
+
+    .button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        background: #0b63b6;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    .button:hover {
+        background: #084f91;
+    }
+
+    footer {
+        text-align: center;
+        color: #666;
+        font-size: 13px;
+        margin-top: 30px;
+    }
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>PESO San Mariano Online Forms</h1>
-<p>Android-friendly web forms — no app installation required</p>
+    <h1>PESO San Mariano</h1>
+    <p>Online Jobseeker Registration</p>
 </header>
-<div class="wrap">
-<section class="qr-card">
-<h2>📱 Scan this QR code to open the PESO Forms website</h2>
-<div id="portalQr"></div>
-<div id="portalUrl"></div>
-<p style="font-size:12px;color:#666">The QR code automatically uses the current website address. After this site is uploaded online, scan it with any Android camera or QR scanner.</p>
-</section>
-<section class="cards">
-<div class="card">
-<h2>NSRP Jobseeker Registration</h2>
-<p>National Skills Registration Program Jobseeker Registration Form.</p>
-<a href="nsrp/">Open NSRP Form</a>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>NSRP Jobseeker Registration Form</h2>
+
+        <p>
+            National Skills Registration Program (NSRP)
+            Jobseeker Registration Form
+        </p>
+
+        <p>
+            Please click the button below to access the
+            online registration form.
+        </p>
+
+        <a class="button" href="./nsrp/">
+            Open NSRP Registration Form
+        </a>
+
+    </div>
+
+    <footer>
+        PESO San Mariano, Isabela
+    </footer>
+
 </div>
-<div class="card rice">
-<h2>Monthly Rice Distribution</h2>
-<p>Personal Data Sheet for the Monthly Rice Distribution program.</p>
-<a href="monthly-rice/">Open Monthly Rice Form</a>
-</div>
-<div class="card field">
-<h2>PESO Field Monitoring</h2>
-<p>DOLE-assisted livelihood project field monitoring report.</p>
-<a href="field-monitoring/">Open Field Monitoring Form</a>
-</div>
-</section>
-<div class="note">
-<b>For Android:</b> Open this website in Chrome, Edge, or another modern Android browser. The forms are designed as normal web pages and do not require PWA installation.
-<br><br>
-<b>Important:</b> This package is ready for web hosting. A public HTTPS website address is required for people outside your local computer/network to access the forms.
-</div>
-</div>
-<script>
-document.addEventListener('DOMContentLoaded',function(){
- const url=location.href.split('#')[0];
- new QRCode(document.getElementById('portalQr'),{text:url,width:190,height:190,correctLevel:QRCode.CorrectLevel.M});
- document.getElementById('portalUrl').textContent=url;
-});
-</script>
+
 </body>
 </html>
