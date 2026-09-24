@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 
 <title>PESO San Mariano - NSRP Jobseeker Registration</title>
 
@@ -106,6 +106,54 @@
         .card {
             padding: 25px 18px;
         }
+       /* Responsive A4 form */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.form-container {
+    width: 210mm;
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Make the A4 form fit mobile screens */
+@media screen and (max-width: 700px) {
+    .form-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    .form-container table {
+        width: 100% !important;
+        max-width: 100% !important;
+        table-layout: fixed;
+    }
+
+    .form-container td,
+    .form-container th {
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+
+    input,
+    select,
+    textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
     }
 </style>
 </head>
