@@ -418,6 +418,58 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 @media print{
   .mobile-qr{display:none!important}
 }
+  .present-address-cell {
+    vertical-align: top;
+    width: 50%;
+}
+
+.present-address-cell input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.address-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 2px 0;
+}
+
+.address-field label {
+    white-space: nowrap;
+}
+
+.address-field input {
+    flex: 1;
+    min-width: 0;
+}
+  @media screen and (max-width: 700px) {
+    .page {
+        width: 100%;
+        min-height: auto;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+    }
+
+    .page table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .page td,
+    .page th {
+        box-sizing: border-box;
+        overflow-wrap: break-word;
+    }
+
+    .page input,
+    .page select,
+    .page textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
 </style>
 </head>
 <body>
@@ -497,12 +549,34 @@ Submit accomplished form to the Public Employment Service Office (PESO) Manager 
 </tr>
 <tr>
 <td class="label">RELIGION</td><td><input id="religion" class="line-input"></td>
-<td class="label">PRESENT ADDRESS</td>
-<td><input id="houseStreet" class="line-input" placeholder="House No. / Street">
-<input id="village" class="line-input" placeholder="Village">
-<input id="barangay" class="line-input" placeholder="Barangay">
-<input id="municipality" class="line-input" placeholder="Municipality/City">
-<input id="province" class="line-input" placeholder="Province"></td>
+<td colspan="2" class="present-address-cell">
+    <b>PRESENT ADDRESS</b>
+
+    <div class="address-field">
+        <label>HOUSE/UNIT NO.:</label>
+        <input type="text">
+    </div>
+
+    <div class="address-field">
+        <label>VILLAGE/STREET:</label>
+        <input type="text">
+    </div>
+
+    <div class="address-field">
+        <label>BARANGAY:</label>
+        <input type="text">
+    </div>
+
+    <div class="address-field">
+        <label>MUNICIPALITY:</label>
+        <input type="text">
+    </div>
+
+    <div class="address-field">
+        <label>PROVINCE:</label>
+        <input type="text">
+    </div>
+</td>
 </tr>
 <tr>
 <td class="label">CIVIL<br>STATUS</td>
