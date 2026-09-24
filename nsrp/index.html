@@ -396,6 +396,29 @@ button[data-clear-assessor]:hover,
   break-inside:avoid;
 }
 
+
+/* Uniform on-screen scaling: same form proportions on desktop and Android.
+   The printed/exported form remains the fixed 8.5 x 13 reference canvas. */
+@media screen and (min-width:901px){
+  .page{width:min(8.5in, calc(100vw - 24px)); height:auto; min-height:13in;}
+}
+@media screen and (max-width:900px){
+  .page{width:100vw!important; max-width:100vw!important; height:auto!important; min-height:0!important;}
+  .form-page{overflow:hidden;}
+}
+
+
+/* Prevent the personal-information columns from collapsing around labels. */
+.page1-personal .disability-row > td:first-child{
+  width:28%!important;
+}
+.page1-personal .disability-row > td:nth-child(2){
+  width:26%!important;
+}
+.page1-personal .disability-row > td:last-child{
+  width:46%!important;
+}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style id="android-web-overrides">
@@ -406,76 +429,123 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .mobile-qr .qr-code{display:flex;justify-content:center;margin:6px 0}
 .mobile-qr .qr-url{font-size:10px;color:#555;word-break:break-all}
 .mobile-qr .qr-home{display:inline-block;margin-top:6px;font-size:12px}
-@media screen and (max-width:700px){
-  body{font-size:13px}
-  .toolbar{position:sticky;top:0;z-index:100;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:7px}
-  .toolbar button{min-height:44px;padding:10px 12px;font-size:13px}
-  .page,.form-page{width:100%!important;max-width:100%!important;min-width:0!important;margin:8px 0!important;padding:8px!important;box-shadow:none!important}
-  table{width:100%!important;max-width:100%!important;table-layout:fixed}
-  input,select,textarea{max-width:100%!important;font-size:16px!important}
+@media screen and (max-width:900px){
+  body{font-size:12px}
+  .toolbar{
+    position:sticky;top:0;z-index:100;
+    display:flex;flex-wrap:wrap;gap:6px;
+    justify-content:center;padding:7px;
+    width:100%;overflow:hidden;
+  }
+  .toolbar button{
+    min-height:40px;padding:8px 10px;font-size:12px;
+    flex:0 0 auto;
+  }
+  .page,.form-page{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:8px 0!important;
+    padding:8px!important;
+    box-shadow:none!important;
+  }
+  .page table{
+    width:100%!important;
+    max-width:100%!important;
+    table-layout:fixed;
+  }
+  .page td,.page th{
+    overflow-wrap:anywhere;
+    word-break:normal;
+  }
+  .page input,.page select,.page textarea{
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box;
+  }
   .mobile-qr{max-width:calc(100% - 16px)}
 }
 @media print{
   .mobile-qr{display:none!important}
 }
-  .present-address-cell {
-    vertical-align: top;
-    width: 50%;
+/* PRESENT ADDRESS: one merged area beside RELIGION on every screen size. */
+.page1-personal .present-address-cell{
+  width:54%!important;
+  vertical-align:top;
+  padding:3px 4px!important;
+}
+.page1-personal .present-address-cell .address-field{
+  display:flex;
+  align-items:center;
+  width:100%;
+  gap:4px;
+  margin:2px 0;
+}
+.page1-personal .present-address-cell .address-field label{
+  flex:0 0 auto;
+  white-space:nowrap;
+  font-size:10px;
+}
+.page1-personal .present-address-cell .address-field input{
+  flex:1 1 auto;
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box;
+}
+/* PERSONAL INFORMATION: give HEIGHT / CONTACT / E-MAIL their own usable column.
+   These fields are in the last cell of the DISABILITY row. */
+.page1-personal .disability-row > td:last-child{
+  width:46%!important;
+  vertical-align:top;
+  padding:3px 4px!important;
+}
+.page1-personal .disability-row > td:last-child b{
+  display:inline-block;
+  margin-top:1px;
+  font-size:10px;
+}
+.page1-personal .disability-row > td:last-child .line-input{
+  display:block;
+  width:100%!important;
+  min-width:0!important;
+  box-sizing:border-box;
 }
 
-.present-address-cell input {
-    width: 100%;
-    box-sizing: border-box;
-}
+@media screen and (max-width:900px){
+  .page1-personal .present-address-cell{
+    width:54%!important;
+    padding:3px!important;
+  }
+  .page1-personal .present-address-cell .address-field{
+    gap:2px;
+    margin:2px 0;
+  }
+  .page1-personal .present-address-cell .address-field label{
+    font-size:8px;
+  }
+  .page1-personal .present-address-cell .address-field input{
+    font-size:10px!important;
+  }
 
-.address-field {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin: 2px 0;
-}
-
-.address-field label {
-    white-space: nowrap;
-}
-
-.address-field input {
-    flex: 1;
-    min-width: 0;
-}
-  @media screen and (max-width: 700px) {
-    .page {
-        width: 100%;
-        min-height: auto;
-        margin: 0;
-        padding: 0;
-        box-shadow: none;
-    }
-
-    .page table {
-        width: 100%;
-        table-layout: fixed;
-    }
-
-    .page td,
-    .page th {
-        box-sizing: border-box;
-        overflow-wrap: break-word;
-    }
-
-    .page input,
-    .page select,
-    .page textarea {
-        max-width: 100%;
-        box-sizing: border-box;
-    }
+  /* Keep HEIGHT / CONTACT / E-MAIL readable and full-width on phones. */
+  .page1-personal .disability-row > td:last-child{
+    width:46%!important;
+    padding:3px!important;
+  }
+  .page1-personal .disability-row > td:last-child b{
+    font-size:8px;
+  }
+  .page1-personal .disability-row > td:last-child .line-input{
+    width:100%!important;
+    font-size:10px!important;
+  }
 }
 </style>
 </head>
 <body>
 
 <div class="screen-note">
-<b>NSRP Form 1 — September 2020</b> &nbsp;|&nbsp; Use this same file on desktop or Android. The form is prepared for A4 paper (210 × 297 mm) for the final PDF and printing. On Android, swipe left/right to view the full form. Fill out electronically, add your signature, then Save as Secure PDF. The PDF is flattened into page images to prevent normal text-field editing.
+<b>NSRP Form 1 — September 2020</b> &nbsp;|&nbsp; Use this same file on desktop or Android. The form is prepared for A4 paper (210 × 297 mm) for the final PDF and printing. On Android, the form automatically fits the available screen width. Fill out electronically, add your signature, then Save as Secure PDF. The PDF is flattened into page images to prevent normal text-field editing.
 </div>
 <div class="toolbar">
 
@@ -554,27 +624,27 @@ Submit accomplished form to the Public Employment Service Office (PESO) Manager 
 
     <div class="address-field">
         <label>HOUSE/UNIT NO.:</label>
-        <input type="text">
+        <input id="addressHouse" type="text">
     </div>
 
     <div class="address-field">
         <label>VILLAGE/STREET:</label>
-        <input type="text">
+        <input id="addressStreet" type="text">
     </div>
 
     <div class="address-field">
         <label>BARANGAY:</label>
-        <input type="text">
+        <input id="addressBarangay" type="text">
     </div>
 
     <div class="address-field">
         <label>MUNICIPALITY:</label>
-        <input type="text">
+        <input id="addressMunicipality" type="text">
     </div>
 
     <div class="address-field">
         <label>PROVINCE:</label>
-        <input type="text">
+        <input id="addressProvince" type="text">
     </div>
 </td>
 </tr>
