@@ -1344,7 +1344,7 @@ async function submitToGoogleSheets(){
 
     const form = document.createElement("form");
 
-    form.method = "GET";
+    form.method = "POST";
     form.action = GOOGLE_SHEETS_URL;
     form.target = "googleSheetsFrame";
     form.style.display = "none";
