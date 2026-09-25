@@ -1325,14 +1325,35 @@ async function submitToGoogleSheets(){
 
     const formData=new URLSearchParams();
     formData.append("payload",JSON.stringify(data));
-
-    await fetch(GOOGLE_SHEETS_URL,{
-      method:"POST",
-      mode:"no-cors",
-      headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-      body:formData
-    });
-
+  
+    if (!document.getElementById("googleSheetsFrame")) {
+      const iframe = document.createElement("iframe");
+      iframe.name = "googleSheetsFrame";
+      iframe.id = "googleSheetsFrame";
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    }
+    
+    const submitForm = document.createElement("form");
+    submitForm.method = "POST";
+    submitForm.action = GOOGLE_SHEETS_URL;
+    submitForm.target = "googleSheetsFrame";
+    submitForm.style.display = "none";
+    
+    const payloadInput = document.createElement("input");
+    payloadInput.type = "hidden";
+    payloadInput.name = "payload";
+    payloadInput.value = JSON.stringify(data);
+    
+    submitForm.appendChild(payloadInput);
+    document.body.appendChild(submitForm);
+    
+    submitForm.submit();
+    
+    setTimeout(() => {
+      submitForm.remove();
+    }, 3000);
+    
     alert(
       "SUCCESS!\n\n"+
       "The NSRP registration has been submitted to PESO San Mariano.\n\n"+
