@@ -1236,8 +1236,8 @@ function getChecked(id){
 }
 
 async function submitToGoogleSheets(){
-  const surname=getValue("surname");
-  const firstName=getValue("firstName");
+  const surname = getValue("surname");
+  const firstName = getValue("firstName");
 
   if(!surname || !firstName){
     alert("Please enter at least the Surname and First Name before submitting.");
@@ -1245,48 +1245,60 @@ async function submitToGoogleSheets(){
   }
 
   if(!confirm(
-    "Submit this NSRP registration to PESO San Mariano?\n\n"+
+    "Submit this NSRP registration to PESO San Mariano?\n\n" +
     "Once submitted, the information will be recorded in the PESO Google Sheet."
   )) return;
 
-  const btn=document.querySelector(".submit-btn");
+  const btn = document.querySelector(".submit-btn");
 
   try{
     if(btn){
-      btn.disabled=true;
-      btn.textContent="Submitting...";
+      btn.disabled = true;
+      btn.textContent = "Submitting...";
     }
 
-    const birthDate=getValue("birthDate");
-    let age="";
+    const birthDate = getValue("birthDate");
+    let age = "";
 
     if(birthDate){
-      const birth=new Date(birthDate);
-      const today=new Date();
-      age=today.getFullYear()-birth.getFullYear();
-      const monthDiff=today.getMonth()-birth.getMonth();
-      if(monthDiff<0 || (monthDiff===0 && today.getDate()<birth.getDate())) age--;
+      const birth = new Date(birthDate);
+      const today = new Date();
+
+      age = today.getFullYear() - birth.getFullYear();
+
+      const monthDiff = today.getMonth() - birth.getMonth();
+
+      if(
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birth.getDate())
+      ){
+        age--;
+      }
     }
 
-    let disability=getCheckedValues("disability");
-    const disabilityOther=getValue("disabilityOther");
+    let disability = getCheckedValues("disability");
+
+    const disabilityOther = getValue("disabilityOther");
+
     if(disabilityOther){
-      disability += (disability ? ", " : "") + "OTHER: " + disabilityOther;
+      disability += (disability ? ", " : "") +
+        "OTHER: " + disabilityOther;
     }
 
-    const employmentStatus=[];
+    const employmentStatus = [];
+
     if(getChecked("employed")) employmentStatus.push("EMPLOYED");
     if(getChecked("wageEmployed")) employmentStatus.push("WAGE EMPLOYED");
     if(getChecked("selfEmployed")) employmentStatus.push("SELF-EMPLOYED");
     if(getChecked("unemployed")) employmentStatus.push("UNEMPLOYED");
 
-    const preferredOccupations=[
+    const preferredOccupations = [
       getValue("occupation1"),
       getValue("occupation2"),
       getValue("occupation3")
     ].filter(Boolean).join(" / ");
 
-    const preferredLocations=[
+    const preferredLocations = [
       getValue("localLocation"),
       getValue("overseasLocation"),
       getValue("location1"),
@@ -1297,80 +1309,66 @@ async function submitToGoogleSheets(){
       getValue("overseas3")
     ].filter(Boolean).join(" / ");
 
-    const data={
-      "Surname":surname,
-      "First Name":firstName,
-      "Middle Name":getValue("middleName"),
-      "Extension":getValue("suffix"),
-      "Sex":getRadioValue("sex"),
-      "Civil Status":getRadioValue("civil"),
-      "Birthdate":birthDate,
-      "Age":age,
-      "Religion":getValue("religion"),
-      "House/Unit No.":getValue("addressHouse"),
-      "Village/Street":getValue("addressStreet"),
-      "Barangay":getValue("addressBarangay"),
-      "Municipality":getValue("addressMunicipality"),
-      "Province":getValue("addressProvince"),
-      "Disability":disability,
-      "Height":getValue("height"),
-      "Contact Number":getValue("contact"),
-      "Email":getValue("email"),
-      "Educational Attainment":getValue("tertiaryLevel"),
-      "Course":getValue("tertiaryCourse"),
-      "Employment Status":employmentStatus.join(", "),
-      "Preferred Occupation":preferredOccupations,
-      "Preferred Location":preferredLocations
+    const data = {
+      "Surname": surname,
+      "First Name": firstName,
+      "Middle Name": getValue("middleName"),
+      "Extension": getValue("suffix"),
+      "Sex": getRadioValue("sex"),
+      "Civil Status": getRadioValue("civil"),
+      "Birthdate": birthDate,
+      "Age": age,
+      "Religion": getValue("religion"),
+      "House/Unit No.": getValue("addressHouse"),
+      "Village/Street": getValue("addressStreet"),
+      "Barangay": getValue("addressBarangay"),
+      "Municipality": getValue("addressMunicipality"),
+      "Province": getValue("addressProvince"),
+      "Disability": disability,
+      "Height": getValue("height"),
+      "Contact Number": getValue("contact"),
+      "Email": getValue("email"),
+      "Educational Attainment": getValue("tertiaryLevel"),
+      "Course": getValue("tertiaryCourse"),
+      "Employment Status": employmentStatus.join(", "),
+      "Preferred Occupation": preferredOccupations,
+      "Preferred Location": preferredLocations
     };
 
-    const formData=new URLSearchParams();
-    formData.append("payload",JSON.stringify(data));
-  
-    if (!document.getElementById("googleSheetsFrame")) {
-      const iframe = document.createElement("iframe");
-      iframe.name = "googleSheetsFrame";
-      iframe.id = "googleSheetsFrame";
-      iframe.style.display = "none";
-      document.body.appendChild(iframe);
-    }
-    
-    const submitForm = document.createElement("form");
-    submitForm.method = "POST";
-    submitForm.action = GOOGLE_SHEETS_URL;
-    submitForm.target = "googleSheetsFrame";
-    submitForm.style.display = "none";
-    
-    const payloadInput = document.createElement("input");
-    payloadInput.type = "hidden";
-    payloadInput.name = "payload";
-    payloadInput.value = JSON.stringify(data);
-    
-    submitForm.appendChild(payloadInput);
-    document.body.appendChild(submitForm);
-    
-    submitForm.submit();
-    
-    setTimeout(() => {
-      submitForm.remove();
-    }, 3000);
-    
+    const formData = new URLSearchParams();
+
+    formData.append("payload", JSON.stringify(data));
+
+    await fetch(GOOGLE_SHEETS_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+      },
+      body: formData.toString()
+    });
+
     alert(
-      "SUCCESS!\n\n"+
-      "The NSRP registration has been submitted to PESO San Mariano.\n\n"+
-      "Please verify that the new record appears in the Google Sheet."
+      "SUCCESS!\n\n" +
+      "The NSRP registration has been submitted to PESO San Mariano."
     );
 
   }catch(error){
-    console.error(error);
+
+    console.error("SUBMISSION ERROR:", error);
+
     alert(
-      "The registration could not be submitted.\n\n"+
-      "Please check your internet connection and try again."
+      "The registration could not be submitted.\n\n" +
+      error.message
     );
+
   }finally{
+
     if(btn){
-      btn.disabled=false;
-      btn.textContent="Submit Registration";
+      btn.disabled = false;
+      btn.textContent = "Submit Registration";
     }
+
   }
 }
 
